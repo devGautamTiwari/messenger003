@@ -1,0 +1,33 @@
+.chat__form {
+  padding: 10px;
+  position: fixed;
+  width: 99.5%;
+  bottom: 0;
+  z-index: 1;
+  background-color: #6bff7f;
+}
+.chat__chat {
+  height: 82vh !important;
+  overflow-y: scroll;
+}
+.chat__formControl {
+  display: flex !important;
+  flex-direction: row !important;
+}
+.chat__input {
+  color: #000000 !important;
+  flex: 1 !important;
+  margin: 15px !important;
+}
+.chat__iconButton {
+  flex: 0 !important;
+  margin-right: 20px !important;
+}
+.chat__signout{
+  background: #ededed !important;
+    border-radius: 1.35em !important;
+    padding: 10px !important;
+}
+/* .chat__FlipMove {
+  margin-bottom: 80px;
+} */

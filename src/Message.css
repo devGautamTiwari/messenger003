@@ -1,0 +1,51 @@
+.message {
+  padding: 5px;
+  margin: 5px calc(1vw + 15px);
+  width: fit-content;
+  height: min-content;
+  max-width: 80%;
+  text-align: left;
+}
+.message__user {
+  display: flex !important;
+  /* justify-content: flex-end; */
+  margin-left: auto;
+  text-align: left !important;
+}
+.MuiCardContent-root {
+  padding: 10px !important;
+}
+.message__text {
+  font-size: 1.09em !important;
+  line-height: 1.3em !important ;
+  font-weight: 300 !important;
+}
+.message__username {
+  margin: 0px 1px;
+  padding: 3px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #9e9e9ee5;
+}
+.message__userCard {
+  border-radius: 1.3em !important;
+  background-color: #39ff54be !important;
+}
+
+.message__guestCard {
+  border-radius: 1.3em !important;
+  background-color: #ecececea !important;
+}
+.message__delete,
+.message__edit {
+  width: min-content;
+  height: min-content;
+  opacity: 0;
+  display: none;
+  transition: all 150ms linear;
+}
+.message__user:hover > .message__delete,
+.message__user:hover > .message__edit {
+  opacity: 0.8;
+  display: block;
+}

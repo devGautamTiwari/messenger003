@@ -1,26 +1,61 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useContext } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Chat from "./Chat";
+import SignIn from "./SignIn";
+import SignUp from "./SignUp";
+import { auth } from "./firebase";
+import { UserProfileProvider, UserProfileContext } from "./UserProfileContext";
+import "./App.css";
 
-function App() {
+const _App = () => {
+  const [, , [username, setUsername], [user, setUser]] = useContext(
+    UserProfileContext
+  );
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((authUser) => {
+      if (authUser) {
+        setUser(authUser);
+        setUsername(authUser.displayName);
+        if (!authUser.emailVerified) {
+          authUser
+            .sendEmailVerification()
+            .then(() => alert("Email sent successfully on " + authUser.email))
+            .catch((err) => alert(err.message));
+        }
+        // return <Chat />;
+      } else {
+        setUser(null);
+        // return <SignIn />;
+      }
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, [user, username]);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <Chat />
+          </Route>
+          <Route exact path="/signin">
+            <SignIn />
+          </Route>
+          <Route exact path="/signup">
+            <SignUp />
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
-}
-
+};
+const App = () => {
+  return (
+    <UserProfileProvider>
+      <_App />
+    </UserProfileProvider>
+  );
+};
 export default App;
