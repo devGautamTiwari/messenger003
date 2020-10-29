@@ -6,6 +6,9 @@
   max-width: 80%;
   text-align: left;
 }
+.message:last-child {
+  margin-bottom: 1vh;
+}
 .message__user {
   display: flex !important;
   /* justify-content: flex-end; */
@@ -16,25 +19,29 @@
   padding: 10px !important;
 }
 .message__text {
-  font-size: 1.09em !important;
+  font-size: 18px !important;
   line-height: 1.3em !important ;
-  font-weight: 300 !important;
+  font-weight: 400 !important;
+  color: #000000 !important;
+}
+.message__userText {
+  color: #000000 !important;
 }
 .message__username {
   margin: 0px 1px;
   padding: 3px;
   font-size: 14px;
-  font-weight: bold;
-  color: #9e9e9ee5;
+  font-weight: 500;
+  color: #c6c5b9;
 }
 .message__userCard {
-  border-radius: 1.3em !important;
-  background-color: #39ff54be !important;
+  border-radius: 1.2em !important;
+  background-color: #ffb400 !important;
 }
 
 .message__guestCard {
   border-radius: 1.3em !important;
-  background-color: #ecececea !important;
+  background-color: #fdfdff !important;
 }
 .message__delete,
 .message__edit {
@@ -46,6 +53,6 @@
 }
 .message__user:hover > .message__delete,
 .message__user:hover > .message__edit {
-  opacity: 0.8;
+  opacity: 0.9;
   display: block;
 }

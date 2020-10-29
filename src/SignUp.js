@@ -1,19 +1,18 @@
-import React, { useContext } from "react";
-import { Link, useHistory } from "react-router-dom";
+import React, { useState, useContext } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 // import FormControlLabel from "@material-ui/core/FormControlLabel";
 // import Checkbox from "@material-ui/core/Checkbox";
-// import Link from "@material-ui/core/Link";
+import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { auth } from "./firebase";
+import db, { auth } from "./firebase";
 import { UserProfileContext } from "./UserProfileContext";
 import "./SignUp.css";
 function Copyright() {
@@ -37,7 +36,8 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: "#ffb400",
+    color: "#000000",
   },
   form: {
     width: "100%", // Fix IE 11 issue.
@@ -50,25 +50,61 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp() {
   const classes = useStyles();
-  const history = useHistory();
   const [
     [email, setEmail],
     [password, setPassword],
     [username, setUsername],
+    [,],
+    [, setActiveComponent],
+    [buttonDisabled, setButtonDisabled],
   ] = useContext(UserProfileContext);
+  const [error, setError] = useState("");
+  const [usernameExists, setUsernameExists] = useState(false);
 
   const signUp = (e) => {
     e.preventDefault();
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((authUser) => {
-        // history.push("/");
-        authUser.user.updateProfile({
-          displayName: username,
+    if (username === "") {
+      setError({ message: "Username is required." });
+    } else if (!usernameExists) {
+      auth
+        .createUserWithEmailAndPassword(email, password)
+        .then((authUser) => {
+          authUser.user.updateProfile({
+            displayName: username,
+          });
+          db.collection("usernames").add({
+            username: username,
+          });
+          alert("User created successfully!");
+        })
+        .catch((err) => setError(err));
+      setPassword("");
+    }
+  };
+
+  const checkUsername = (e) => {
+    setUsernameExists(false);
+    setError({});
+    db.collection("usernames")
+      .where("username", "==", e.target.value)
+      .limit(1)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach(() => {
+          setError({
+            message: "Username already taken.",
+          });
+          setUsernameExists(true);
+          return true;
         });
-        return alert("User created successfully!");
       })
-      .catch((err) => alert(err.message));
+      .catch((err) => setError(err));
+    // auth.getUsers([{ username: username }]).then((usersResult) => {
+    //   usersResult.users.forEach((userRecord) => {
+    //     setusernameExists(false);
+    //     return false;
+    //   });
+    // });
   };
 
   return (
@@ -81,12 +117,15 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
+        <Typography color="error">{error.message}</Typography>
+
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 margin="normal"
+                color={usernameExists ? "secondary" : "primary"}
                 required
                 fullWidth
                 id="username"
@@ -95,8 +134,9 @@ export default function SignUp() {
                 value={username}
                 onChange={(e) => {
                   setUsername(e.target.value);
+                  checkUsername(e);
                 }}
-                autoFocus
+                // onBlur={(e) => checkUsername(e)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -143,13 +183,23 @@ export default function SignUp() {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={(e) => signUp(e)}
+            onClick={(e) => {
+              signUp(e);
+              setButtonDisabled(true);
+              setTimeout(() => {
+                setButtonDisabled(false);
+              }, 5000);
+            }}
+            disabled={buttonDisabled}
           >
             Sign Up
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link to="signin" variant="body2">
+              <Link
+                variant="body2"
+                onClick={() => setActiveComponent("SignIn")}
+              >
                 Already have an account? Sign in
               </Link>
             </Grid>

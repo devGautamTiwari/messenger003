@@ -1,13 +1,11 @@
-import React, { useContext } from "react";
-import { Link, useHistory } from "react-router-dom";
-
+import React, { useState, useContext } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 // import FormControlLabel from "@material-ui/core/FormControlLabel";
 // import Checkbox from "@material-ui/core/Checkbox";
-// import Link from '@material-ui/core/Link';
+import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -39,7 +37,8 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: "#ffb400",
+    color: "#000000",
   },
   form: {
     width: "100%", // Fix IE 11 issue.
@@ -52,22 +51,31 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn() {
   const classes = useStyles();
-  const history = useHistory();
   const [
     [email, setEmail],
     [password, setPassword],
-    [, setUsername],
-    [user],
+    [,],
+    [,],
+    [, setActiveComponent],
+    [buttonDisabled, setButtonDisabled],
   ] = useContext(UserProfileContext);
+  const [error, setError] = useState([]);
   const signIn = (e) => {
     e.preventDefault();
     auth
       .signInWithEmailAndPassword(email, password)
       .then((authUser) => {
-        setUsername(authUser.user.displayName);
-        history.push("/");
+        setError({});
+        if (!authUser.user.emailVerified) {
+          setError({
+            message: `Please verify your email address at ${authUser.user.email}`,
+          });
+        } else {
+          alert("Signing you in...");
+        }
       })
-      .catch((err) => alert(err.message));
+      .catch((err) => setError(err));
+    setPassword("");
   };
 
   return (
@@ -80,6 +88,8 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
+        <Typography color="error">{error.message}</Typography>
+
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -125,7 +135,14 @@ export default function SignIn() {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={(e) => signIn(e)}
+            onClick={(e) => {
+              signIn(e);
+              setButtonDisabled(true);
+              setTimeout(() => {
+                setButtonDisabled(false);
+              }, 5000);
+            }}
+            disabled={buttonDisabled}
           >
             Sign In
           </Button>
@@ -136,7 +153,10 @@ export default function SignIn() {
               </Link>
             </Grid> */}
             <Grid item>
-              <Link to="signup" variant="body2">
+              <Link
+                variant="body2"
+                onClick={() => setActiveComponent("SignUp")}
+              >
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>

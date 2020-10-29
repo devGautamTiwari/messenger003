@@ -14,8 +14,7 @@ import db from "./firebase";
 const Message = forwardRef((props, ref) => {
   const [text, setText] = useState(props.message.text);
   const [editMode, setEditMode] = useState(false);
-  const isUser = props.username === props.message.username;
-  const isAdmin = isUser || props.username === "gautamtiwari003";
+  const isUser = props.email === props.message.email;
   return (
     <div ref={ref} className={`message ${isUser && "message__user"}`}>
       <p className="message__username">
@@ -23,7 +22,7 @@ const Message = forwardRef((props, ref) => {
         {props.message.edited && !isUser && " (edited)"}
       </p>
 
-      {isAdmin && (
+      {isUser && (
         <>
           <IconButton
             className="message__edit"
@@ -54,10 +53,8 @@ const Message = forwardRef((props, ref) => {
               {text}
             </Typography>
           ) : (
-            <Input
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-              onBlur={() => {
+            <form
+              onSubmit={() => {
                 db.collection("messages").doc(props.id).set(
                   {
                     text: text,
@@ -67,7 +64,16 @@ const Message = forwardRef((props, ref) => {
                 );
                 setEditMode(false);
               }}
-            />
+            >
+              <Input
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+                onBlur={() => {
+                  setEditMode(false);
+                }}
+              />
+              <button type="submit" style={{ display: "none" }}></button>
+            </form>
           )}
         </CardContent>
       </Card>

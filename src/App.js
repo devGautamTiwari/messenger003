@@ -1,60 +1,58 @@
 import React, { useEffect, useContext } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Chat from "./Chat";
-import SignIn from "./SignIn";
-import SignUp from "./SignUp";
+import Auth from "./Auth";
 import { auth } from "./firebase";
 import { UserProfileProvider, UserProfileContext } from "./UserProfileContext";
 import "./App.css";
 
-const _App = () => {
-  const [, , [username, setUsername], [user, setUser]] = useContext(
-    UserProfileContext
-  );
+function APP() {
+  const [
+    [, setEmail],
+    ,
+    [, setUsername],
+    [user, setUser],
+    [activeComponent, setActiveComponent],
+  ] = useContext(UserProfileContext);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
       if (authUser) {
-        setUser(authUser);
-        setUsername(authUser.displayName);
-        if (!authUser.emailVerified) {
+        if (authUser.emailVerified) {
+          setUser(authUser);
+          setEmail(authUser.email);
+          setUsername(authUser.displayName);
+          setActiveComponent("Chat");
+        } else {
           authUser
             .sendEmailVerification()
-            .then(() => alert("Email sent successfully on " + authUser.email))
+            .then(() => {
+              alert(`Please verify your email at ${authUser.email}`);
+            })
             .catch((err) => alert(err.message));
+          auth.signOut();
         }
-        // return <Chat />;
       } else {
         setUser(null);
-        // return <SignIn />;
+        setUsername("");
+        setEmail("");
+        setActiveComponent("SignIn");
       }
     });
     return () => {
       unsubscribe();
     };
-  }, [user, username]);
+  }, [user]);
+
   return (
     <div className="App">
-      <Router>
-        <Switch>
-          <Route exact path="/">
-            <Chat />
-          </Route>
-          <Route exact path="/signin">
-            <SignIn />
-          </Route>
-          <Route exact path="/signup">
-            <SignUp />
-          </Route>
-        </Switch>
-      </Router>
+      {activeComponent === "Chat" ? <Chat /> : <Auth />}
     </div>
   );
-};
+}
 const App = () => {
   return (
     <UserProfileProvider>
-      <_App />
+      <APP />
     </UserProfileProvider>
   );
 };

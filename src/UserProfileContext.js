@@ -7,6 +7,10 @@ const UserProfileProvider = (props) => {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [user, setUser] = useState(null);
+  const [activeComponent, setActiveComponent] = useState("SignIn");
+  const [buttonDisabled, setButtonDisabled] = useState(false);
+  // const [canAccess, setCanAccess] = useState(false);
+
   return (
     <UserProfileContext.Provider
       value={[
@@ -14,6 +18,10 @@ const UserProfileProvider = (props) => {
         [password, setPassword],
         [username, setUsername],
         [user, setUser],
+        [activeComponent, setActiveComponent],
+        [buttonDisabled, setButtonDisabled],
+        // [authComponent, setAuthComponent],
+        // [canAccess, setCanAccess],
       ]}
     >
       {props.children}
