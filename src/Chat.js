@@ -55,7 +55,6 @@ function Chat() {
       <div className="chat__welcome">
         <h2
           style={{
-            color: "#000000",
             marginLeft: "18px",
           }}
         >

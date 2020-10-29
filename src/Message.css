@@ -25,7 +25,7 @@
   color: #000000 !important;
 }
 .message__userText {
-  color: #000000 !important;
+  color: #000 !important;
 }
 .message__username {
   margin: 0px 1px;
@@ -36,12 +36,12 @@
 }
 .message__userCard {
   border-radius: 1.2em !important;
-  background-color: #ffb400 !important;
+  background-color: var(--userMessageColor) !important;
 }
 
 .message__guestCard {
   border-radius: 1.3em !important;
-  background-color: #fdfdff !important;
+  background-color: var(--guestMessageColor) !important;
 }
 .message__delete,
 .message__edit {
