@@ -3,11 +3,14 @@ import {
   Card,
   CardContent,
   Typography,
-  Input,
+  TextField,
   IconButton,
 } from "@material-ui/core";
+import { isMobile } from "react-device-detect";
+
 import "./Message.css";
 import DeleteIcon from "@material-ui/icons/Delete";
+import SendIcon from "@material-ui/icons/Send";
 import EditIcon from "@material-ui/icons/Edit";
 import db from "./firebase";
 
@@ -15,6 +18,17 @@ const Message = forwardRef((props, ref) => {
   const [text, setText] = useState(props.message.text);
   const [editMode, setEditMode] = useState(false);
   const isUser = props.email === props.message.email;
+  const updateMessage = (id, text_) => {
+    db.collection("messages").doc(id).set(
+      {
+        text: text_,
+        edited: true,
+      },
+      { merge: true }
+    );
+    setEditMode(false);
+  };
+
   return (
     <div ref={ref} className={`message ${isUser && "message__user"}`}>
       <p className="message__username">
@@ -53,26 +67,35 @@ const Message = forwardRef((props, ref) => {
               {text}
             </Typography>
           ) : (
-            <form
-              onSubmit={() => {
-                db.collection("messages").doc(props.id).set(
-                  {
-                    text: text,
-                    edited: true,
-                  },
-                  { merge: true }
-                );
-                setEditMode(false);
-              }}
-            >
-              <Input
+            <form>
+              <TextField
                 value={text}
+                variant="outlined"
+                multiline
+                size="small"
                 onChange={(e) => setText(e.target.value)}
                 onBlur={() => {
-                  setEditMode(false);
+                  updateMessage(props.id, text);
+                }}
+                onKeyPress={(e) => {
+                  if (!isMobile) {
+                    if (!e.shiftKey && e.key === "Enter") {
+                      e.preventDefault();
+                      updateMessage(props.id, text);
+                    }
+                  }
                 }}
               />
-              <button type="submit" style={{ display: "none" }}></button>
+              <IconButton
+                className="message__iconButton"
+                disabled={!text}
+                variant="contained"
+                color="primary"
+                type="submit"
+                onClick={() => updateMessage(props.id, text)}
+              >
+                <SendIcon />
+              </IconButton>
             </form>
           )}
         </CardContent>

@@ -1,8 +1,14 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 // import { Link } from "react-router-dom";
-
+import { isMobile } from "react-device-detect";
 import Message from "./Message";
-import { FormControl, Input, IconButton, Link } from "@material-ui/core";
+import {
+  FormControl,
+  TextField,
+  Input,
+  IconButton,
+  Link,
+} from "@material-ui/core";
 import FlipMove from "react-flip-move";
 import SendIcon from "@material-ui/icons/Send";
 import firebase from "firebase";
@@ -41,13 +47,15 @@ function Chat() {
 
   const sendMessage = (e) => {
     e.preventDefault();
-    db.collection("messages").add({
-      text: input,
-      username: username,
-      email: email,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-    });
-    setInput("");
+    if (input) {
+      db.collection("messages").add({
+        text: input,
+        username: username,
+        email: email,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      });
+      setInput("");
+    }
   };
 
   return (
@@ -94,14 +102,24 @@ function Chat() {
       <div>
         <form className="chat__form">
           <FormControl className="chat__formControl">
-            <Input
+            <TextField
               className="chat__input"
+              variant="outlined"
               placeholder="Type a message..."
               value={input}
+              multiline
+              size="small"
               onChange={(e) => setInput(e.target.value)}
+              onKeyPress={(e) => {
+                if (!isMobile) {
+                  if (!e.shiftKey && e.key === "Enter") {
+                    e.preventDefault();
+                    sendMessage(e);
+                  }
+                }
+              }}
               autoFocus
             />
-
             <IconButton
               className="chat__iconButton"
               disabled={!input}

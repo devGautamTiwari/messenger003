@@ -62,6 +62,7 @@ export default function SignIn() {
   const [error, setError] = useState([]);
   const signIn = (e) => {
     e.preventDefault();
+    setButtonDisabled(true);
     auth
       .signInWithEmailAndPassword(email, password)
       .then((authUser) => {
@@ -71,11 +72,14 @@ export default function SignIn() {
             message: `Please verify your email address at ${authUser.user.email}`,
           });
         } else {
+          setPassword("");
           alert("Signing you in...");
         }
       })
       .catch((err) => setError(err));
-    setPassword("");
+    setTimeout(() => {
+      setButtonDisabled(false);
+    }, 3000);
   };
 
   return (
@@ -90,7 +94,7 @@ export default function SignIn() {
         </Typography>
         <Typography color="error">{error.message}</Typography>
 
-        <form className={classes.form} noValidate>
+        <form className={classes.form}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
@@ -137,21 +141,32 @@ export default function SignIn() {
             className={classes.submit}
             onClick={(e) => {
               signIn(e);
-              setButtonDisabled(true);
-              setTimeout(() => {
-                setButtonDisabled(false);
-              }, 5000);
             }}
             disabled={buttonDisabled}
           >
             Sign In
           </Button>
           <Grid container>
-            {/* <Grid item xs>
-              <Link href="#" variant="body2">
+            <Grid item xs>
+              <Link
+                variant="body2"
+                onClick={() => {
+                  setError({});
+                  if (email) {
+                    auth
+                      .sendPasswordResetEmail(email)
+                      .then(() =>
+                        alert("Password reset email sent successfully")
+                      )
+                      .catch((err) => setError(err));
+                  } else {
+                    setError({ message: "You need to enter your email first" });
+                  }
+                }}
+              >
                 Forgot password?
               </Link>
-            </Grid> */}
+            </Grid>
             <Grid item>
               <Link
                 variant="body2"

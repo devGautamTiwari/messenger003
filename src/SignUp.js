@@ -63,6 +63,7 @@ export default function SignUp() {
 
   const signUp = (e) => {
     e.preventDefault();
+    setButtonDisabled(true);
     if (username === "") {
       setError({ message: "Username is required." });
     } else if (!usernameExists) {
@@ -80,6 +81,9 @@ export default function SignUp() {
         .catch((err) => setError(err));
       setPassword("");
     }
+    setTimeout(() => {
+      setButtonDisabled(false);
+    }, 3000);
   };
 
   const checkUsername = (e) => {
@@ -119,13 +123,13 @@ export default function SignUp() {
         </Typography>
         <Typography color="error">{error.message}</Typography>
 
-        <form className={classes.form} noValidate>
+        <form className={classes.form}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 margin="normal"
-                color={usernameExists ? "secondary" : "primary"}
+                error={usernameExists ? true : false}
                 required
                 fullWidth
                 id="username"
@@ -185,10 +189,6 @@ export default function SignUp() {
             className={classes.submit}
             onClick={(e) => {
               signUp(e);
-              setButtonDisabled(true);
-              setTimeout(() => {
-                setButtonDisabled(false);
-              }, 5000);
             }}
             disabled={buttonDisabled}
           >
