@@ -31,7 +31,7 @@ function APP() {
       if (authUser) {
         setUser(authUser);
         setEmail(authUser.email);
-        setUsername(authUser.displayName);
+        setUsername(authUser.username);
       } else {
         setUser(null);
         setUsername("");

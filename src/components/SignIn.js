@@ -54,7 +54,7 @@ export default function SignIn() {
   const [error, setError] = useState([]);
   const [emailSent, setEmailSent] = useState(false);
   const actionCodeSettings = {
-    url: "https://localhost:3000/signin",
+    url: "https://facebook-messenger-clone003.web.app/signin",
     handleCodeInApp: true,
   };
   useEffect(() => {

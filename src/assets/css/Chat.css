@@ -8,3 +8,32 @@
   overflow-x: hidden;
   overflow-y: scroll;
 }
+.chat__modal {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%);
+  width: 350px;
+  height: 150px;
+  background-color: #ffffff !important;
+  border: 2px solid #373737;
+  box-shadow: 5px;
+}
+
+.chat__modal__formcontrol .MuiInputBase-root,
+.chat__modal__formcontrol > .chat__modal__button {
+  color: #ffffff !important;
+}
+.chat__modal__formcontrol .chat__modal__button {
+  margin: 5px !important;
+  /* width: min-content; */
+  background-color: #373737 !important;
+  transition: all linear 100ms;
+}
+.chat__modal__formcontrol .Mui-disabled {
+  color: rgba(0, 0, 0, 0.26) !important ;
+  background-color: rgba(0, 0, 0, 0.12) !important;
+}
