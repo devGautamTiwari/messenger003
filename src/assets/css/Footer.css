@@ -42,7 +42,7 @@
 .MuiIconButton-colorPrimary {
   color: #fff !important;
 }
-.footer__form fieldset {
+fieldset {
   border: none !important;
   border-radius: 1.3em !important;
   background-color: #fc5664 !important;

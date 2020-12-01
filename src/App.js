@@ -41,7 +41,6 @@ function APP() {
     return () => {
       unsubscribe();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
   return (
     <div className="App">
@@ -49,12 +48,10 @@ function APP() {
       <Router>
         <Switch>
           <Route exact path="/">
-            <Chat />
-            {/* {user ? <Chat /> : <Redirect to="/signin" />} */}
+            {!user ? <Chat /> : <Redirect to="/signin" />}
           </Route>
           <Route exact path="/signin">
-            {/* <SignIn /> */}
-            {/* {!user ? <SignIn /> : <Redirect to="/" />} */}
+            {user ? <SignIn /> : <Redirect to="/" />}
           </Route>
         </Switch>
       </Router>

@@ -26,7 +26,6 @@ const Message = forwardRef((props, ref) => {
       },
       { merge: true }
     );
-    setEditMode(false);
   };
 
   return (
@@ -76,12 +75,14 @@ const Message = forwardRef((props, ref) => {
                 onChange={(e) => setText(e.target.value)}
                 onBlur={() => {
                   updateMessage(props.id, text);
+                  setEditMode(false);
                 }}
                 onKeyPress={(e) => {
                   if (!isMobile) {
                     if (!e.shiftKey && e.key === "Enter") {
                       e.preventDefault();
                       updateMessage(props.id, text);
+                      setEditMode(false);
                     }
                   }
                 }}
