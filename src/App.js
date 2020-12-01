@@ -1,51 +1,63 @@
 import React, { useEffect, useContext } from "react";
-import Chat from "./Chat";
-import Auth from "./Auth";
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+} from "react-router-dom";
+import {
+  UserProfileProvider,
+  UserProfileContext,
+} from "./components/UserProfileContext";
+
+import Chat from "./components/Chat";
+import Loader from "./components/Loader";
+import SignIn from "./components/SignIn";
+
 import { auth } from "./firebase";
-import { UserProfileProvider, UserProfileContext } from "./UserProfileContext";
-import "./App.css";
+import "./assets/css/App.css";
 
 function APP() {
   const [
     [, setEmail],
-    ,
     [, setUsername],
     [user, setUser],
-    [activeComponent, setActiveComponent],
+    [loading, handleLoading],
   ] = useContext(UserProfileContext);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
+      handleLoading();
       if (authUser) {
-        if (authUser.emailVerified) {
-          setUser(authUser);
-          setEmail(authUser.email);
-          setUsername(authUser.displayName);
-          setActiveComponent("Chat");
-        } else {
-          authUser
-            .sendEmailVerification()
-            .then(() => {
-              alert(`Please verify your email at ${authUser.email}`);
-            })
-            .catch((err) => alert(err.message));
-          auth.signOut();
-        }
+        setUser(authUser);
+        setEmail(authUser.email);
+        setUsername(authUser.displayName);
       } else {
         setUser(null);
         setUsername("");
         setEmail("");
-        setActiveComponent("SignIn");
       }
     });
     return () => {
       unsubscribe();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
-
   return (
     <div className="App">
-      {activeComponent === "Chat" ? <Chat /> : <Auth />}
+      {loading && <Loader />}
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <Chat />
+            {/* {user ? <Chat /> : <Redirect to="/signin" />} */}
+          </Route>
+          <Route exact path="/signin">
+            {/* <SignIn /> */}
+            {/* {!user ? <SignIn /> : <Redirect to="/" />} */}
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 }

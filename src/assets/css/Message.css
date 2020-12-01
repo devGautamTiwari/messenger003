@@ -1,41 +1,48 @@
 .message {
   padding: 5px;
-  margin: 5px calc(1vw + 15px);
+  margin: 2px calc(1vw + 15px);
   width: fit-content;
-  height: min-content;
+  height: fit-content;
   max-width: 80%;
   text-align: left;
 }
+.message:first-child {
+  padding-top: 135px;
+}
 .message:last-child {
-  margin-bottom: 1vh;
+  /* padding-bottom: 60px; */
 }
 .message__user {
   display: flex !important;
-  /* justify-content: flex-end; */
   margin-left: auto;
   text-align: left !important;
 }
+.message__user .MuiCardContent-root {
+  margin: 0.5px !important;
+}
 .MuiCardContent-root {
-  padding: 10px !important;
+  padding: 5px !important;
 }
 .message__text {
-  font-size: 18px !important;
-  line-height: 1.3em !important ;
+  white-space: pre-wrap;
+  padding: 2px !important;
+  font-size: 16px !important;
+  line-height: 1.45em !important ;
   font-weight: 400 !important;
-  color: #000000 !important;
+  color: #fff !important;
 }
 .message__userText {
-  color: #000 !important;
+  color: #fff !important;
 }
 .message__username {
   margin: 0px 1px;
-  padding: 3px;
-  font-size: 14px;
+  padding: 1px 3px;
+  font-size: 12px;
   font-weight: 500;
-  color: #c6c5b9;
+  color: #ededed;
 }
 .message__userCard {
-  border-radius: 1.2em !important;
+  border-radius: 1.3em !important;
   background-color: var(--userMessageColor) !important;
 }
 
@@ -45,8 +52,10 @@
 }
 .message__delete,
 .message__edit {
-  width: min-content;
-  height: min-content;
+  width: 1.45em !important;
+  height: 1.45em !important;
+  margin-left: 2px !important;
+  margin-right: 2px !important;
   opacity: 0;
   display: none;
   transition: all 150ms linear;
@@ -54,7 +63,8 @@
 .message__user:hover > .message__delete,
 .message__user:hover > .message__edit {
   opacity: 0.9;
-  display: block;
+  display: inline-flex;
+  backdrop-filter: brightness(0.95);
 }
 .message__iconButton {
   flex: 0 !important;

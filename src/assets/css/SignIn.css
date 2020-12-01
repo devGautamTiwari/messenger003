@@ -1,0 +1,21 @@
+.signin__container {
+  margin: 0;
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fffffa !important;
+  color: #373737;
+  border-radius: 1.35em;
+  padding-bottom: 20px !important;
+}
+.signin__email * {
+  background-color: #f9f9f9 !important;
+  border-radius: 1.3em;
+  color: var(--backgroundColor) !important;
+}
+.signin__button {
+  margin: 5px !important;
+  background-color: var(--backgroundColor) !important;
+  color: #ffffff !important;
+}

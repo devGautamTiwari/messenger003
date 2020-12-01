@@ -1,0 +1,50 @@
+.footer__form {
+  z-index: 999;
+  max-width: calc(var(--maxWidth) - 20px);
+  width: 100%;
+  bottom: 0;
+  position: fixed;
+  padding: 6px 2px;
+  backdrop-filter: blur(4px);
+}
+.footer__formControl {
+  display: flex !important;
+  flex-direction: row !important;
+  margin: 0px !important;
+  padding: 0px 10px !important;
+  align-items: center !important;
+}
+.footer__input {
+  color: #fff !important;
+  flex: 1 !important;
+  margin-left: 10px !important;
+  margin-right: 10px !important;
+}
+.footer__input .MuiInputBase-root {
+  color: #fff !important;
+}
+.footer__iconButton {
+  flex: 0 !important;
+  padding: 10.5px !important;
+  /* margin-left: 12px !important; */
+}
+
+.footer__form .MuiIconButton-root {
+  border-radius: 50%;
+  background-color: #fc5664 !important;
+  transition: all linear 100ms;
+  /* padding: 5px !important; */
+}
+.footer__form .MuiIconButton-root.Mui-disabled {
+  color: #ffffff33 !important;
+  background-color: transparent !important;
+}
+.MuiIconButton-colorPrimary {
+  color: #fff !important;
+}
+.footer__form fieldset {
+  border: none !important;
+  border-radius: 1.3em !important;
+  background-color: #fc5664 !important;
+  z-index: -1 !important;
+}

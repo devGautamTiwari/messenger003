@@ -8,11 +8,11 @@ import {
 } from "@material-ui/core";
 import { isMobile } from "react-device-detect";
 
-import "./Message.css";
+import "../assets/css/Message.css";
 import DeleteIcon from "@material-ui/icons/Delete";
 import SendIcon from "@material-ui/icons/Send";
 import EditIcon from "@material-ui/icons/Edit";
-import db from "./firebase";
+import { db } from "../firebase";
 
 const Message = forwardRef((props, ref) => {
   const [text, setText] = useState(props.message.text);
@@ -21,7 +21,7 @@ const Message = forwardRef((props, ref) => {
   const updateMessage = (id, text_) => {
     db.collection("messages").doc(id).set(
       {
-        text: text_,
+        text: text,
         edited: true,
       },
       { merge: true }
