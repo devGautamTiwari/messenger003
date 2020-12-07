@@ -22,12 +22,12 @@ function APP() {
     [, setEmail],
     [username, setUsername],
     [user, setUser],
-    [loading, handleLoading],
+    [loading, setLoading, handleLoading],
   ] = useContext(UserProfileContext);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
-      handleLoading();
+      handleLoading(3);
       if (authUser) {
         setUser(authUser);
         setEmail(authUser.email);
@@ -37,6 +37,7 @@ function APP() {
         setUsername("");
         setEmail("");
       }
+      setLoading(false);
     });
     return () => {
       unsubscribe();

@@ -8,9 +8,9 @@ const UserProfileProvider = (props) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const handleLoading = (milliseconds = 2000) => {
+  const handleLoading = (seconds = 120) => {
     setLoading(true);
-    setTimeout(() => setLoading(false), milliseconds);
+    setTimeout(() => setLoading(false), seconds * 1000);
   };
   // const [canAccess, setCanAccess] = useState(false);
 
@@ -20,7 +20,7 @@ const UserProfileProvider = (props) => {
         [email, setEmail],
         [username, setUsername],
         [user, setUser],
-        [loading, handleLoading],
+        [loading, setLoading, handleLoading],
       ]}
     >
       {props.children}

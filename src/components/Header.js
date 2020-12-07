@@ -4,10 +4,11 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { auth } from "../firebase";
 import { UserProfileContext } from "./UserProfileContext";
 import "../assets/css/Header.css";
-const Header = () => {
-  const [, , [user], [loading]] = useContext(UserProfileContext);
-  const displayName = user ? " " + user.displayName : "";
-  const [welcomeText, setWelcomeText] = useState(`Welcome${displayName}!`);
+const Header = (props) => {
+  const [, [username], , [loading]] = useContext(UserProfileContext);
+  const [welcomeText, setWelcomeText] = useState(
+    `Welcome ${props.displayName}!`
+  );
   setTimeout(() => setWelcomeText("Messenger003"), 60000);
 
   return (

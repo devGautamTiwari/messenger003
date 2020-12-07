@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn() {
   const classes = useStyles();
-  const [[email, setEmail], , , [, handleLoading]] = useContext(
+  const [[email, setEmail], , , [, setLoading, handleLoading]] = useContext(
     UserProfileContext
   );
   const [error, setError] = useState([]);
@@ -58,8 +58,8 @@ export default function SignIn() {
     handleCodeInApp: true,
   };
   useEffect(() => {
-    // handleLoading();
     if (auth.isSignInWithEmailLink(window.location.href)) {
+      handleLoading(3);
       let email_ = window.localStorage.getItem("emailForSignIn");
       if (!email_) {
         email_ = prompt("Please provide your email for confirmation");
@@ -68,22 +68,30 @@ export default function SignIn() {
         .signInWithEmailLink(email_, window.location.href)
         .then((authUser) => {
           window.localStorage.removeItem("emailForSignIn");
+          // setLoading(false);
           return <Redirect to="/" />;
         })
-        .catch((err) => setError(err));
+        .catch((err) => {
+          setError(err);
+          setLoading(false);
+        });
     }
   }, [email]);
   const signIn = (e) => {
     e.preventDefault();
+    handleLoading(2);
     auth
       .sendSignInLinkToEmail(email, actionCodeSettings)
-      .then((authUser) => {
-        handleLoading();
+      .then(() => {
         setError({});
         setEmailSent(true);
         window.localStorage.setItem("emailForSignIn", email);
+        setLoading(false);
       })
-      .catch((err) => setError(err));
+      .catch((err) => {
+        setLoading(false);
+        setError(err);
+      });
   };
 
   return (
