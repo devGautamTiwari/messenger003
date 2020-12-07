@@ -5,12 +5,13 @@
   flex-direction: row;
   justify-content: center;
   align-items: center !important;
-  position: fixed;
-  top: 0;
+  /* position: fixed; */
+  /* top: 0; */
   background-color: var(--userMessageColor);
   color: #ffffffef !important;
   border-radius: 1.3em;
-  z-index: 9;
+  z-index: 4;
+  height: var(--headerHeight) !important;
 }
 .header__welcome {
   display: flex;
@@ -22,16 +23,16 @@
   color: #fff !important;
 }
 .header__signout__text {
+  max-width: 0;
   opacity: 0;
   overflow: hidden;
-  max-width: 0;
   position: relative;
   white-space: nowrap;
-  transition: max-width 800ms ease-in, opacity 400ms ease-in 100ms;
+  transition: max-width 250ms ease-in, opacity 200ms ease-in;
 }
 .header__signout:hover .header__signout__text {
-  opacity: 1;
   max-width: 250px;
+  opacity: 1;
 }
 .header__signout {
   max-height: 40px;

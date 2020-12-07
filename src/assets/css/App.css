@@ -5,6 +5,7 @@
   --backgroundColor: #18191a;
   --guestMessageColor: #373737;
   --maxWidth: 930px;
+  --headerHeight: 65px;
 }
 body {
   font-family: "Roboto", sans-serif;
@@ -35,7 +36,9 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #ff626f;
 }
-
+form {
+  outline: 0px !important;
+}
 @media screen and (min-width: 930px) {
   .App {
     margin-left: auto;

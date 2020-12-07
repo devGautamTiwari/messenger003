@@ -20,7 +20,7 @@ import "./assets/css/App.css";
 function APP() {
   const [
     [, setEmail],
-    [, setUsername],
+    [username, setUsername],
     [user, setUser],
     [loading, handleLoading],
   ] = useContext(UserProfileContext);
@@ -31,7 +31,7 @@ function APP() {
       if (authUser) {
         setUser(authUser);
         setEmail(authUser.email);
-        setUsername(authUser.username);
+        setUsername(authUser.displayName);
       } else {
         setUser(null);
         setUsername("");
@@ -41,17 +41,17 @@ function APP() {
     return () => {
       unsubscribe();
     };
-  }, [user]);
+  }, [user, username]);
   return (
     <div className="App">
       {loading && <Loader />}
       <Router>
         <Switch>
           <Route exact path="/">
-            {!user ? <Chat /> : <Redirect to="/signin" />}
+            {user ? <Chat /> : <Redirect to="/signin" />}
           </Route>
           <Route exact path="/signin">
-            {user ? <SignIn /> : <Redirect to="/" />}
+            {!user ? <SignIn /> : <Redirect to="/" />}
           </Route>
         </Switch>
       </Router>

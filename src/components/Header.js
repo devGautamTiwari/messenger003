@@ -5,10 +5,9 @@ import { auth } from "../firebase";
 import { UserProfileContext } from "./UserProfileContext";
 import "../assets/css/Header.css";
 const Header = () => {
-  const [, [username], , [loading]] = useContext(UserProfileContext);
-  const [welcomeText, setWelcomeText] = useState(
-    `Welcome ${username ? username : "User"}!`
-  );
+  const [, , [user], [loading]] = useContext(UserProfileContext);
+  const displayName = user ? " " + user.displayName : "";
+  const [welcomeText, setWelcomeText] = useState(`Welcome${displayName}!`);
   setTimeout(() => setWelcomeText("Messenger003"), 60000);
 
   return (

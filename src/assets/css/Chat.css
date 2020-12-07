@@ -1,10 +1,11 @@
 .chat__main {
   display: flex;
   flex-direction: column;
-  padding-bottom: 55px !important;
 }
 .chat__chat {
-  max-height: 100vh;
+  max-height: calc(100vh - (var(--headerHeight) + 60px));
+  height: 100%;
+  width: 100%;
   overflow-x: hidden;
   overflow-y: scroll;
 }
@@ -16,24 +17,46 @@
   top: 50% !important;
   left: 50% !important;
   transform: translate(-50%, -50%);
-  width: 350px;
-  height: 150px;
-  background-color: #ffffff !important;
-  border: 2px solid #373737;
-  box-shadow: 5px;
+  width: fit-content;
+  height: fit-content;
+  box-sizing: border-box;
+  padding: 25px;
+  padding-bottom: 30px !important;
 }
-
+.chat__modal > div {
+  /* background-color: var(--guestMessageColor) !important; */
+  border-radius: 3px !important;
+  /* background-color: #fc5664b4 !important; */
+  background-color: #373737 !important;
+}
+.chat__modal__input div fieldset {
+  background-color: #fc5664;
+}
+.chat__modal__input p {
+  color: #aaaaaa !important;
+}
 .chat__modal__formcontrol .MuiInputBase-root,
 .chat__modal__formcontrol > .chat__modal__button {
-  color: #ffffff !important;
+  color: #fffffa !important;
 }
 .chat__modal__formcontrol .chat__modal__button {
-  margin: 5px !important;
-  /* width: min-content; */
-  background-color: #373737 !important;
+  margin: 10px 20px 5px !important;
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  color: #000000 !important;
+  border-radius: 3px !important;
   transition: all linear 100ms;
 }
 .chat__modal__formcontrol .Mui-disabled {
-  color: rgba(0, 0, 0, 0.26) !important ;
-  background-color: rgba(0, 0, 0, 0.12) !important;
+  color: rgba(255, 255, 255, 0.26) !important ;
+  background-color: rgba(255, 255, 255, 0.35) !important;
+}
+.chat__modal__background {
+  height: 110vh;
+  width: 110vw;
+  position: fixed;
+  margin: 0;
+  padding: 0;
+  top: 0;
+  z-index: 7;
+  background-color: var(--backgroundColor);
 }

@@ -61,7 +61,6 @@ export default function SignIn() {
     // handleLoading();
     if (auth.isSignInWithEmailLink(window.location.href)) {
       let email_ = window.localStorage.getItem("emailForSignIn");
-      console.log(email);
       if (!email_) {
         email_ = prompt("Please provide your email for confirmation");
       }

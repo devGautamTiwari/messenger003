@@ -2,7 +2,12 @@ import React, { useContext, useState } from "react";
 import { isMobile } from "react-device-detect";
 import firebase from "firebase";
 
-import { FormControl, IconButton, TextField } from "@material-ui/core";
+import {
+  FormControl,
+  IconButton,
+  InputAdornment,
+  TextField,
+} from "@material-ui/core";
 import SendIcon from "@material-ui/icons/Send";
 import { db } from "../firebase";
 import { UserProfileContext } from "./UserProfileContext";
@@ -44,17 +49,23 @@ const Footer = () => {
             }
           }}
           autoFocus
+          InputProps={{
+            endAdornment: (
+              <InputAdornment postion="end">
+                <IconButton
+                  className="footer__iconButton"
+                  disabled={!input}
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                  onClick={sendMessage}
+                >
+                  <SendIcon />
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
         />
-        <IconButton
-          className="footer__iconButton"
-          disabled={!input}
-          variant="contained"
-          color="primary"
-          type="submit"
-          onClick={sendMessage}
-        >
-          <SendIcon />
-        </IconButton>
       </FormControl>
     </form>
   );

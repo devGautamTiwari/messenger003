@@ -1,10 +1,10 @@
 .footer__form {
-  z-index: 999;
+  z-index: 5;
   max-width: calc(var(--maxWidth) - 20px);
   width: 100%;
   bottom: 0;
   position: fixed;
-  padding: 6px 2px;
+  padding: 6px 2px 10px;
   backdrop-filter: blur(4px);
 }
 .footer__formControl {
@@ -16,35 +16,51 @@
 }
 .footer__input {
   color: #fff !important;
+  border-radius: 1.3em !important;
   flex: 1 !important;
-  margin-left: 10px !important;
-  margin-right: 10px !important;
+  margin-left: 5px !important;
+  margin-right: 5px !important;
 }
 .footer__input .MuiInputBase-root {
+  /* padding-right: 5px !important; */
   color: #fff !important;
 }
 .footer__iconButton {
   flex: 0 !important;
-  padding: 10.5px !important;
-  /* margin-left: 12px !important; */
+  padding: 9.5px !important;
+  padding-left: 12px !important;
 }
 
 .footer__form .MuiIconButton-root {
   border-radius: 50%;
-  background-color: #fc5664 !important;
-  transition: all linear 100ms;
+  background-color: var(--guestMessageColor) !important;
+  transition: all linear 50ms;
+  transform: scale(1.25);
   /* padding: 5px !important; */
 }
 .footer__form .MuiIconButton-root.Mui-disabled {
-  color: #ffffff33 !important;
-  background-color: transparent !important;
+  opacity: 0;
+  transform: scale(0);
+  /* color: #ffffff33 !important;
+  background-color: transparent !important; */
 }
 .MuiIconButton-colorPrimary {
   color: #fff !important;
 }
+.footer__input div fieldset {
+  background-color: #fc5664 !important;
+}
 fieldset {
   border: none !important;
   border-radius: 1.3em !important;
-  background-color: #fc5664 !important;
   z-index: -1 !important;
+}
+.footer__input div {
+  padding: 5px 10px !important;
+}
+.footer__input div textarea {
+  padding: 8px 5px !important;
+  font-size: 16px !important;
+  line-height: 18px !important;
+  overflow-wrap: break-word;
 }

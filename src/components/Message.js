@@ -5,6 +5,8 @@ import {
   Typography,
   TextField,
   IconButton,
+  InputAdornment,
+  FormControl,
 } from "@material-ui/core";
 import { isMobile } from "react-device-detect";
 
@@ -54,9 +56,9 @@ const Message = forwardRef((props, ref) => {
           </IconButton>
         </>
       )}
-      <Card className={isUser ? "message__userCard" : "message__guestCard"}>
-        <CardContent>
-          {!editMode ? (
+      {!editMode ? (
+        <Card className={isUser ? "message__userCard" : "message__guestCard"}>
+          <CardContent>
             <Typography
               color="textPrimary"
               className={`message__text ${isUser && "message__userText"}`}
@@ -65,42 +67,52 @@ const Message = forwardRef((props, ref) => {
             >
               {text}
             </Typography>
-          ) : (
-            <form>
-              <TextField
-                value={text}
-                variant="outlined"
-                multiline
-                size="small"
-                onChange={(e) => setText(e.target.value)}
-                onBlur={() => {
-                  updateMessage(props.id, text);
-                  setEditMode(false);
-                }}
-                onKeyPress={(e) => {
-                  if (!isMobile) {
-                    if (!e.shiftKey && e.key === "Enter") {
-                      e.preventDefault();
-                      updateMessage(props.id, text);
-                      setEditMode(false);
-                    }
+          </CardContent>
+        </Card>
+      ) : (
+        <form className="message__form">
+          <FormControl className="message__formControl">
+            <TextField
+              className="message__input"
+              value={text}
+              variant="outlined"
+              multiline
+              size="small"
+              onChange={(e) => setText(e.target.value)}
+              onBlur={() => {
+                updateMessage(props.id, text);
+                setEditMode(false);
+              }}
+              onKeyPress={(e) => {
+                if (!isMobile) {
+                  if (!e.shiftKey && e.key === "Enter") {
+                    e.preventDefault();
+                    updateMessage(props.id, text);
+                    setEditMode(false);
                   }
-                }}
-              />
-              <IconButton
-                className="message__iconButton"
-                disabled={!text}
-                variant="contained"
-                color="primary"
-                type="submit"
-                onClick={() => updateMessage(props.id, text)}
-              >
-                <SendIcon />
-              </IconButton>
-            </form>
-          )}
-        </CardContent>
-      </Card>
+                }
+              }}
+              autoFocus
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment postion="end">
+                    <IconButton
+                      className="message__sendIconButton"
+                      disabled={!text}
+                      variant="contained"
+                      color="primary"
+                      type="submit"
+                      onClick={() => updateMessage(props.id, text)}
+                    >
+                      <SendIcon />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </FormControl>
+        </form>
+      )}
     </div>
   );
 });
