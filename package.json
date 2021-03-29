@@ -14,8 +14,11 @@
     "react-device-detect": "^1.14.0",
     "react-dom": "^16.14.0",
     "react-flip-move": "^3.0.4",
+    "react-mui-swipeable": "^1.0.7",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.3"
+    "react-scripts": "3.4.3",
+    "react-swipeable": "^6.0.1",
+    "react-toastify": "^6.2.0"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import Message from "./Message";
-import FlipMove from "react-flip-move";
+// import FlipMove from "react-flip-move";
 import { db } from "../firebase";
 import { UserProfileContext } from "./UserProfileContext";
 import Header from "./Header";
@@ -12,14 +12,17 @@ import UsernameModal from "./UsernameModal";
 const Chat = () => {
   const [
     [email],
-    [username, setUsername],
+    [username],
     [user],
-    [, setLoading, handleLoading],
+    [, setLoading],
+    ,
+    ,
+    chatSectionHeight,
   ] = useContext(UserProfileContext);
   const [messages, setMessages] = useState([]);
   const messagesEndRef = useRef(null);
   useEffect(() => {
-    handleLoading(3);
+    setLoading(true);
     const unsubscribe = () => {
       db.collection("messages")
         .orderBy("timestamp", "asc")
@@ -39,30 +42,30 @@ const Chat = () => {
 
   return (
     <div className="chat__main">
-      {/* {true ? ( */}
-      {user && user.displayName ? (
+      {/* {user && user.displayName ? ( */}
+      {true ? (
         <>
-          <Header displayName={user.displayName} />
+          <Header displayName={"user.displayName"} />
           <div className="chat__chat">
-            <FlipMove className="chat__flipmove">
-              {messages.map(({ id, message }) => {
-                if (message.text) {
-                  return (
-                    <Message
-                      key={id}
-                      username={username}
-                      message={message}
-                      email={email}
-                      id={id}
-                    />
-                  );
-                } else {
-                  db.collection("messages").doc(id).delete();
-                }
-              })}
-            </FlipMove>
-            <div ref={messagesEndRef} />
+            {/* <FlipMove className="chat__flipmove"> */}
+            {messages.map(({ id, message }) => {
+              if (!message.text.trim()) {
+                db.collection("messages").doc(id).delete();
+                return <></>;
+              }
+              return (
+                <Message
+                  key={id}
+                  username={username}
+                  message={message}
+                  email={email}
+                  id={id}
+                />
+              );
+            })}
+            {/* </FlipMove> */}
           </div>
+          <div ref={messagesEndRef} />
           <Footer />
         </>
       ) : (

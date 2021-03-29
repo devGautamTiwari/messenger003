@@ -1,54 +1,59 @@
 .chat__main {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  /* max-width: var(--maxWidth); */
 }
 .chat__chat {
-  max-height: calc(100vh - (var(--headerHeight) + 60px));
-  height: 100%;
+  display: flex;
+  flex-direction: column;
   width: 100%;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: hidden;
+  margin-top: 68px;
+  margin-bottom: 39px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
+
 .chat__modal {
   position: fixed;
   display: flex;
   align-items: center;
   justify-content: center;
-  top: 50% !important;
-  left: 50% !important;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
   width: fit-content;
   height: fit-content;
   box-sizing: border-box;
   padding: 25px;
-  padding-bottom: 30px !important;
+  padding-bottom: 30px;
 }
 .chat__modal > div {
-  /* background-color: var(--guestMessageColor) !important; */
-  border-radius: 3px !important;
-  /* background-color: #fc5664b4 !important; */
-  background-color: #373737 !important;
+  border-radius: 3px;
+  background-color: #373737;
 }
 .chat__modal__input div fieldset {
   background-color: #fc5664;
 }
 .chat__modal__input p {
-  color: #aaaaaa !important;
+  color: #aaaaaa;
 }
 .chat__modal__formcontrol .MuiInputBase-root,
 .chat__modal__formcontrol > .chat__modal__button {
-  color: #fffffa !important;
+  color: #fffffa;
 }
 .chat__modal__formcontrol .chat__modal__button {
-  margin: 10px 20px 5px !important;
-  background-color: rgba(255, 255, 255, 0.95) !important;
-  color: #000000 !important;
-  border-radius: 3px !important;
+  margin: 10px 20px 5px;
+  background-color: rgba(255, 255, 255, 0.95);
+  color: #000000;
+  border-radius: 3px;
   transition: all linear 100ms;
 }
 .chat__modal__formcontrol .Mui-disabled {
-  color: rgba(255, 255, 255, 0.26) !important ;
-  background-color: rgba(255, 255, 255, 0.35) !important;
+  color: rgba(255, 255, 255, 0.26);
+  background-color: rgba(255, 255, 255, 0.35);
 }
 .chat__modal__background {
   height: 110vh;

@@ -1,53 +1,19 @@
 import React, { useState, useContext, useEffect } from "react";
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
+import { Redirect } from "react-router-dom";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
 import { auth } from "../firebase";
 import { UserProfileContext } from "./UserProfileContext";
-
 import "../assets/css/SignIn.css";
-import { Redirect } from "react-router-dom";
-function Copyright() {
+
+function Copyright({ brandName }) {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      Messenger003 {new Date().getFullYear()}
-      {"."}
-    </Typography>
+    <p>
+      Copyright &copy; {brandName} {new Date().getFullYear()}.
+    </p>
   );
 }
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    // marginTop: theme.spacing(8),
-    paddingTop: "10px",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: "#f5f5f5",
-    color: "#373737",
-  },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
-
 export default function SignIn() {
-  const classes = useStyles();
   const [[email, setEmail], , , [, setLoading, handleLoading]] = useContext(
     UserProfileContext
   );
@@ -95,55 +61,33 @@ export default function SignIn() {
   };
 
   return (
-    <div className="signin__signin">
-      <Container component="main" className="signin__container" maxWidth="xs">
-        <CssBaseline />
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in to Messenger003
-          </Typography>
-          <Typography color="error">{error.message}</Typography>
+    <div className="signin__container">
+      <span aria-hidden={true}>
+        <LockOutlinedIcon />
+      </span>
+      <h1>Sign in to Messenger003</h1>
+      <p className="error">{error.message}</p>
 
-          <form className={classes.form}>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  className="signin__email"
-                  variant="outlined"
-                  placeholder="Email Address"
-                  required
-                  fullWidth
-                  id="email"
-                  name="email"
-                  value={email}
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                  }}
-                  autoComplete="email"
-                  autoFocus
-                />
-              </Grid>
-              <Button
-                className="signin__button"
-                type="submit"
-                fullWidth
-                variant="contained"
-                onClick={(e) => {
-                  signIn(e);
-                }}
-              >
-                {emailSent ? "Link Sent! Send Again?" : "Get Sign In Link"}
-              </Button>
-            </Grid>
-          </form>
-        </div>
-        <Box mt={8}>
-          <Copyright />
-        </Box>
-      </Container>
+      <form onSubmit={(e) => signIn(e)}>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          className="signin__email"
+          placeholder="Email Address"
+          value={email}
+          onChange={(e) => {
+            setEmail(e.target.value);
+          }}
+          autoComplete="email"
+          autoFocus
+          required
+        />
+        <button className="signin__button" type="submit">
+          {emailSent ? "Link Sent! Send Again?" : "Get Sign In Link"}
+        </button>
+      </form>
+      <Copyright brandName={"Messenger003"} />
     </div>
   );
 }

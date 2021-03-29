@@ -1,99 +1,92 @@
 .message {
-  padding: 5px;
-  margin: 2px calc(1vw + 15px);
+  display: flex;
+  min-width: calc(10% + 100px);
+  max-width: calc(100% - 50px);
   width: fit-content;
-  height: fit-content;
-  max-width: 80%;
+  /* background-color: #fc5664; */
   text-align: left;
+  margin-right: auto;
+  margin-left: calc(5vw + 8px);
+  margin-bottom: 10px;
+  border-radius: 0.5rem;
+  box-shadow: 0px 0px 40px 4px #fc56644d;
+  padding: 10px;
 }
-.message__form {
-  height: fit-content;
-  text-align: left;
-}
-/* .message__formcontrol {
-  padding: 0px !important;
-  margin: 0px !important;
-} */
-.message__form .message__input {
-  border-radius: 1.3em !important;
-  background-color: #fc5664 !important;
-}
-.message__form .message__input .MuiInputBase-root {
-  color: #fff !important;
-}
-.message__form .message__sendIconButton {
-  border-radius: 50%;
-  background-color: var(--guestMessageColor) !important;
-  transition: all linear 50ms;
-  transform: scale(1.2);
-}
-.message__form .MuiIconButton-root.Mui-disabled {
-  opacity: 0;
-  transform: scale(0);
-}
-.message__input div {
-  padding: 0px 2px !important;
-}
-.message__input div textarea {
-  padding: 8px 5px !important;
-  font-size: 14px !important;
-  line-height: 18px !important;
-}
-.message__user {
-  display: flex !important;
+.message__own {
   margin-left: auto;
-  text-align: left !important;
+  margin-right: calc(5vw + 8px);
+  background-color: #e053534d;
+  box-shadow: 0px 0px 50px 2px #fc86944d;
 }
-.message__user .MuiCardContent-root {
-  margin: 0.5px !important;
-}
-.MuiCardContent-root {
-  padding: 5px !important;
-}
+
 .message__text {
+  min-width: calc(1vw + 50px);
+  display: flex;
+  flex-direction: column;
   white-space: pre-wrap;
-  padding: 2px !important;
-  font-size: 15px !important;
-  line-height: 1.45em !important ;
-  font-weight: 400 !important;
-  color: #fff !important;
+  padding: 4px 2px;
+  /* padding-left: 4px ; */
+  font-size: calc(60% + 0.2em);
+  line-height: 1.45em;
+  font-weight: 300;
+  color: #f1f1f2;
+  letter-spacing: 0px;
+  font-family: var(--fontFamily);
+  /* margin-top: 0px ; */
+  /* margin-right: 58px ; */
 }
 .message__userText {
-  color: #fff !important;
+  color: #f1f1f2;
 }
-.message__username {
-  margin: 0px 1px;
-  padding: 1px 3px;
-  font-size: 12px;
-  font-weight: 500;
-  color: #ededed;
+.message__name {
+  font-size: 68%;
+  font-weight: 300;
+  color: #eededecc;
+  text-align: left;
+}
+.message__text__extra {
+  font-weight: 300;
+  font-size: 60%;
+  color: #ddddddef;
+  padding-left: 2px;
+  text-align: left;
+}
+
+.message__card {
+  border-radius: 8px;
+  /* width: fit-content; */
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-left: auto;
+  position: relative;
 }
 .message__userCard {
-  border-radius: 1.3em !important;
-  background-color: var(--userMessageColor) !important;
+  background-color: var(--userMessageColor);
 }
 
 .message__guestCard {
-  border-radius: 1.3em !important;
-  background-color: var(--guestMessageColor) !important;
+  background-color: var(--guestMessageColor);
 }
-.message__delete,
-.message__edit {
-  width: 1.45em !important;
-  height: 1.45em !important;
-  margin-left: 2px !important;
-  margin-right: 2px !important;
-  opacity: 0;
-  display: none;
-  transition: all 150ms linear;
+
+.message__message {
+  display: flex;
+  /* flex-direction: column; */
 }
-.message__user:hover > .message__delete,
-.message__user:hover > .message__edit {
-  opacity: 0.9;
-  display: inline-flex;
-  backdrop-filter: brightness(0.95);
+.message__timestamp {
+  display: block;
+  /* font-family: "Courier New", Courier, monospace; */
+  width: 100%;
+  color: #ddddddcf;
+  text-align: right;
+  font-size: 0.7rem;
+  font-weight: 250;
+  line-height: 90%;
+  letter-spacing: -0.02em;
 }
-.message__iconButton {
-  flex: 0 !important;
-  margin-right: 20px !important;
+
+.row,
+.row * {
+  display: block;
+  width: 100%;
 }

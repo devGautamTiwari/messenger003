@@ -1,40 +1,35 @@
 import React, { useContext, useState } from "react";
-import { IconButton, Link } from "@material-ui/core";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { auth } from "../firebase";
 import { UserProfileContext } from "./UserProfileContext";
 import "../assets/css/Header.css";
+import { Link } from "react-router-dom";
 const Header = (props) => {
-  const [, [username], , [loading]] = useContext(UserProfileContext);
+  const [, , , [loading]] = useContext(UserProfileContext);
   const [welcomeText, setWelcomeText] = useState(
-    `Welcome ${props.displayName}!`
+    `Welcome, ${props.displayName}`
   );
   setTimeout(() => setWelcomeText("Messenger003"), 60000);
 
   return (
     <div className="header__header">
-      <div className="header__welcome">
-        <h2
-          style={{
-            marginLeft: "18px",
-          }}
-        >
-          {welcomeText}
-        </h2>
-      </div>
+      <header className="header__welcome">
+        <h2>{welcomeText}</h2>
+      </header>
       <Link
-        className="header__signout"
+        className="header__signout__link"
         onClick={() => {
           auth.signOut();
         }}
+        to="/signin"
         disabled={loading}
-        variant="subtitle1"
-        color="primary"
       >
-        <IconButton className="header__signout__icon" variant="contained">
+        {/* <button className="header__signout__btn"> */}
+        <span className="header__signout__icon">
           <ExitToAppIcon />
-        </IconButton>
-        <div className="header__signout__text">Log out</div>
+        </span>
+        <span className="header__signout__text">Sign out</span>
+        {/* </button> */}
       </Link>
     </div>
   );

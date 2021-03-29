@@ -7,11 +7,11 @@ const UserProfileProvider = (props) => {
   const [username, setUsername] = useState("");
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const headerHeight = "65";
+  const footerHeight = "40";
+  const chatSectionHeight =
+    window.innerHeight - headerHeight - footerHeight - 21;
 
-  const handleLoading = (seconds = 120) => {
-    setLoading(true);
-    setTimeout(() => setLoading(false), seconds * 1000);
-  };
   // const [canAccess, setCanAccess] = useState(false);
 
   return (
@@ -20,7 +20,10 @@ const UserProfileProvider = (props) => {
         [email, setEmail],
         [username, setUsername],
         [user, setUser],
-        [loading, setLoading, handleLoading],
+        [loading, setLoading],
+        headerHeight,
+        footerHeight,
+        chatSectionHeight,
       ]}
     >
       {props.children}

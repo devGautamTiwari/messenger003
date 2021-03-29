@@ -1,13 +1,6 @@
 import React, { useContext, useState } from "react";
 import { isMobile } from "react-device-detect";
 import firebase from "firebase";
-
-import {
-  FormControl,
-  IconButton,
-  InputAdornment,
-  TextField,
-} from "@material-ui/core";
 import SendIcon from "@material-ui/icons/Send";
 import { db } from "../firebase";
 import { UserProfileContext } from "./UserProfileContext";
@@ -15,7 +8,9 @@ import "../assets/css/Footer.css";
 
 const Footer = () => {
   const [input, setInput] = useState("");
-  const [[email], [username]] = useContext(UserProfileContext);
+  const [[email], [username], , , , footerHeight] = useContext(
+    UserProfileContext
+  );
 
   const sendMessage = (e) => {
     e.preventDefault();
@@ -27,47 +22,41 @@ const Footer = () => {
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       });
       setInput("");
+      e.target.innerText = "";
     }
   };
   return (
-    <form className="footer__form">
-      <FormControl className="footer__formControl">
-        <TextField
+    <div className="footer">
+      <form className="footer__form">
+        <div
           className="footer__input"
-          variant="outlined"
           placeholder="Type a message..."
-          value={input}
-          multiline
-          size="small"
-          onChange={(e) => setInput(e.target.value)}
-          onKeyPress={(e) => {
-            if (!isMobile) {
+          onInput={(e) => setInput(e.target.innerText.trim())}
+          onKeyPress={
+            !isMobile &&
+            ((e) => {
               if (!e.shiftKey && e.key === "Enter") {
                 e.preventDefault();
                 sendMessage(e);
               }
-            }
-          }}
+            })
+          }
           autoFocus
-          InputProps={{
-            endAdornment: (
-              <InputAdornment postion="end">
-                <IconButton
-                  className="footer__iconButton"
-                  disabled={!input}
-                  variant="contained"
-                  color="primary"
-                  type="submit"
-                  onClick={sendMessage}
-                >
-                  <SendIcon />
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
+          contentEditable={true}
         />
-      </FormControl>
-    </form>
+        <button
+          className="footer__sendBtn"
+          disabled={!input}
+          type="submit"
+          onClick={sendMessage}
+        >
+          <span className="footer__sendBtn__text">Send</span>
+          <span className="footer__sendBtn__icon">
+            <SendIcon />
+          </span>
+        </button>
+      </form>
+    </div>
   );
 };
 
