@@ -91,7 +91,7 @@ export default function SignIn() {
           className="signin__button"
           type="submit"
           disabled={!email}
-          onSubmit={(e) => signIn(e)}
+          onClick={(e) => signIn(e)}
         >
           {emailSent ? "Link Sent. Send Again?" : "Get Sign In Link"}
         </button>
