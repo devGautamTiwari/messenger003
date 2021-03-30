@@ -7,7 +7,7 @@ import "../assets/css/SignIn.css";
 
 function Copyright({ brandName }) {
   return (
-    <p>
+    <p className="copyright">
       Copyright &copy; {brandName} {new Date().getFullYear()}.
     </p>
   );
@@ -25,7 +25,7 @@ export default function SignIn() {
   };
   useEffect(() => {
     if (auth.isSignInWithEmailLink(window.location.href)) {
-      handleLoading(3);
+      handleLoading(true);
       let email_ = window.localStorage.getItem("emailForSignIn");
       if (!email_) {
         email_ = prompt("Please provide your email for confirmation");
@@ -34,7 +34,7 @@ export default function SignIn() {
         .signInWithEmailLink(email_, window.location.href)
         .then((authUser) => {
           window.localStorage.removeItem("emailForSignIn");
-          // setLoading(false);
+          setLoading(false);
           return <Redirect to="/" />;
         })
         .catch((err) => {
@@ -45,14 +45,14 @@ export default function SignIn() {
   }, [email]);
   const signIn = (e) => {
     e.preventDefault();
-    handleLoading(2);
+    handleLoading(true);
     auth
       .sendSignInLinkToEmail(email, actionCodeSettings)
       .then(() => {
         setError({});
         setEmailSent(true);
-        window.localStorage.setItem("emailForSignIn", email);
         setLoading(false);
+        window.localStorage.setItem("emailForSignIn", email);
       })
       .catch((err) => {
         setLoading(false);
@@ -61,20 +61,24 @@ export default function SignIn() {
   };
 
   return (
-    <div className="signin__container">
-      <span aria-hidden={true}>
-        <LockOutlinedIcon />
-      </span>
-      <h1>Sign in to Messenger003</h1>
+    <div className="signin__wrapper">
+      <header className="signin__header">
+        <span aria-hidden={true} className="signin__header__lockicon">
+          <LockOutlinedIcon />
+        </span>
+        <h1>Messenger003</h1>
+      </header>
+
       <p className="error">{error.message}</p>
 
-      <form onSubmit={(e) => signIn(e)}>
+      <form onSubmit={(e) => signIn(e)} className="signin__form">
+        <h2>Sign in</h2>
         <input
           id="email"
           name="email"
           type="email"
           className="signin__email"
-          placeholder="Email Address"
+          placeholder="Enter your email address"
           value={email}
           onChange={(e) => {
             setEmail(e.target.value);
@@ -83,8 +87,8 @@ export default function SignIn() {
           autoFocus
           required
         />
-        <button className="signin__button" type="submit">
-          {emailSent ? "Link Sent! Send Again?" : "Get Sign In Link"}
+        <button className="signin__button" type="submit" disabled={!email}>
+          {emailSent ? "Link Sent. Send Again?" : "Get Sign In Link"}
         </button>
       </form>
       <Copyright brandName={"Messenger003"} />

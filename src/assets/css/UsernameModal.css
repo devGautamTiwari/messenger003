@@ -1,0 +1,66 @@
+.username__modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 20px;
+  box-shadow: 0px 0px 40px var(--userMessageColor);
+  padding: 30px 12px;
+  width: 90%;
+  max-width: 350px;
+  background-color: #fdfdfdfd;
+  color: #000;
+}
+.username____modal__form {
+  border: 1px solid #343434;
+  border-radius: 20px;
+  padding: 20px 20px 30px;
+}
+
+.username__modal__heading {
+}
+
+.username__modal__name {
+  display: block;
+  margin: 28px auto 0px;
+  border: 0;
+  font-size: 85%;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.4);
+  border-radius: 4px;
+  width: 90%;
+  padding: 8px 10px;
+}
+.username__modal__name:focus {
+  outline-color: var(--userMessageColor);
+}
+.username__modal__btn {
+  border: 0;
+  padding: 8px 10px;
+  margin-top: 15px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  transition: transform 150ms ease-in-out;
+}
+.username__modal__btn:not(:disabled) {
+  cursor: pointer;
+  background-color: crimson;
+  color: #fff;
+  box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.4);
+}
+
+.username__modal__btn:not(:disabled):hover {
+  transform: translateY(1px);
+  opacity: 0.9;
+}
+.username__modal__btn:not(:disabled):focus {
+  outline-color: var(--userMessageColor);
+  outline-offset: 2px;
+  transform: translateY(2px);
+  opacity: 0.8;
+}
+.username__modal__btn:disabled:focus {
+  outline: none;
+}

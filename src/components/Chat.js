@@ -10,15 +10,9 @@ import "../assets/css/Chat.css";
 import UsernameModal from "./UsernameModal";
 
 const Chat = () => {
-  const [
-    [email],
-    [username],
-    [user],
-    [, setLoading],
-    ,
-    ,
-    chatSectionHeight,
-  ] = useContext(UserProfileContext);
+  const [[email], [username], [user], [, setLoading], , , ,] = useContext(
+    UserProfileContext
+  );
   const [messages, setMessages] = useState([]);
   const messagesEndRef = useRef(null);
   useEffect(() => {
@@ -42,10 +36,10 @@ const Chat = () => {
 
   return (
     <div className="chat__main">
-      {/* {user && user.displayName ? ( */}
-      {true ? (
+      {/* {true ? ( */}
+      {user && user.displayName ? (
         <>
-          <Header displayName={"user.displayName"} />
+          <Header displayName={user.displayName} />
           <div className="chat__chat">
             {/* <FlipMove className="chat__flipmove"> */}
             {messages.map(({ id, message }) => {
