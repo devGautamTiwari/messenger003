@@ -48,7 +48,7 @@ const Footer = () => {
           className="footer__sendBtn"
           disabled={!input}
           type="submit"
-          onClick={sendMessage}
+          onClick={(e) => sendMessage(e)}
         >
           <span className="footer__sendBtn__text">Send</span>
           <span className="footer__sendBtn__icon">
