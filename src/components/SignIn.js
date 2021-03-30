@@ -14,7 +14,7 @@ function Copyright({ brandName }) {
 }
 
 export default function SignIn() {
-  const [[email, setEmail], , , [, setLoading, handleLoading]] = useContext(
+  const [[email, setEmail], , , [, setLoading]] = useContext(
     UserProfileContext
   );
   const [error, setError] = useState([]);
@@ -25,7 +25,7 @@ export default function SignIn() {
   };
   useEffect(() => {
     if (auth.isSignInWithEmailLink(window.location.href)) {
-      handleLoading(true);
+      setLoading(true);
       let email_ = window.localStorage.getItem("emailForSignIn");
       if (!email_) {
         email_ = prompt("Please provide your email for confirmation");
@@ -45,7 +45,7 @@ export default function SignIn() {
   }, [email]);
   const signIn = (e) => {
     e.preventDefault();
-    handleLoading(true);
+    setLoading(true);
     auth
       .sendSignInLinkToEmail(email, actionCodeSettings)
       .then(() => {
@@ -71,7 +71,7 @@ export default function SignIn() {
 
       <p className="error">{error.message}</p>
 
-      <form className="signin__form">
+      <form className="signin__form" onSubmit={(e) => signIn(e)}>
         <h2>Sign in</h2>
         <input
           id="email"
@@ -87,12 +87,7 @@ export default function SignIn() {
           autoFocus
           required
         />
-        <button
-          className="signin__button"
-          type="submit"
-          disabled={!email}
-          onClick={(e) => signIn(e)}
-        >
+        <button className="signin__button" type="submit" disabled={!email}>
           {emailSent ? "Link Sent. Send Again?" : "Get Sign In Link"}
         </button>
       </form>
