@@ -71,7 +71,7 @@ export default function SignIn() {
 
       <p className="error">{error.message}</p>
 
-      <form onSubmit={(e) => signIn(e)} className="signin__form">
+      <form className="signin__form">
         <h2>Sign in</h2>
         <input
           id="email"
@@ -87,7 +87,12 @@ export default function SignIn() {
           autoFocus
           required
         />
-        <button className="signin__button" type="submit" disabled={!email}>
+        <button
+          className="signin__button"
+          type="submit"
+          disabled={!email}
+          onSubmit={(e) => signIn(e)}
+        >
           {emailSent ? "Link Sent. Send Again?" : "Get Sign In Link"}
         </button>
       </form>
